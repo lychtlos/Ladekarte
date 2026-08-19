@@ -1,0 +1,14 @@
+services:
+  ladekarte:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      # Hinter HTTPS-Proxy einschalten, dann wird das Sitzungs-Cookie als Secure gesetzt
+      SECURE_COOKIES: "1"
+    volumes:
+      - ladekarte-daten:/daten
+    restart: unless-stopped
+
+volumes:
+  ladekarte-daten:
