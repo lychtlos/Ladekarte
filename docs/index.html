@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#FAFAF7">
+<meta name="description" content="Ladesäulen mit Echtzeit-Belegung und den Preisen deiner eigenen Ladekarten.">
+<title>Ladekarte</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Ladekarte">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="stylesheet" href="./vendor/leaflet/leaflet.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./app.css">
+</head>
+<body>
+
+<div id="map"></div>
+
+<div class="top">
+  <span class="marke">Ladekarte</span>
+  <div class="spacer"></div>
+  <button class="iconbtn" id="btnSat" aria-label="Satellitenansicht">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+  </button>
+  <button class="iconbtn" id="btnDark" aria-label="Dunkles Design">
+    <svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+  </button>
+  <button class="iconbtn" id="btnKonto" aria-label="Konto und Synchronisierung">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+    <span class="punkt" id="kontoPunkt"></span>
+  </button>
+  <button class="iconbtn" id="btnTarife" aria-label="Meine Ladekarten">
+    <svg viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h11"/></svg>
+  </button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="fabs" id="fabs">
+  <button class="fab" id="btnReload" aria-label="Neu laden">
+    <svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v4h-4"/></svg>
+  </button>
+  <button class="fab" id="btnHier" aria-label="Mein Standort">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.4"/><path d="M12 2.6v3M12 18.4v3M21.4 12h-3M5.6 12h-3"/></svg>
+  </button>
+</div>
+
+<div class="sheet half" id="sheet">
+  <div class="griff" id="griff"><i></i></div>
+  <div class="sheet-head">
+    <span class="titel" id="sheetTitel">Ladesäulen</span>
+    <span class="sub">günstigste zuerst</span>
+  </div>
+  <div class="sheet-body" id="list">
+    <div class="empty"><b>Karte bewegen.</b> Geladen wird nur, was Echtzeit-Belegung meldet.
+      Reinzoomen fragt nichts neu ab, rauszoomen schon.</div>
+  </div>
+
+  <div class="detail" id="detail">
+    <div class="d-head">
+      <div id="dBadge"></div>
+      <div class="txt"><h2 id="dTitel"></h2><p id="dMeta"></p></div>
+      <button class="d-close" id="dClose" aria-label="Schließen">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="d-body" id="dBody"></div>
+  </div>
+</div>
+
+<div class="modal" id="modalTarife">
+  <div class="modal-box">
+    <div class="m-head">
+      <h2>Meine Ladekarten</h2>
+      <button class="kbtn dunkel" id="btnCloseTarife" style="margin-left:auto">Fertig</button>
+    </div>
+    <div class="m-body">
+      <p class="lead">Preise in €/kWh, alle Tarife ohne Grundgebühr. Pro Karte gilt die erste Netz-Zeile, deren Betreiber passt — die Zeile ohne Betreiber ist Roaming. Feld leer heißt: dort nicht nutzbar.</p>
+      <div id="kartenListe"></div>
+      <button class="kbtn" id="btnAddKarte">+ Karte</button>
+      <datalist id="cpoOptionen"></datalist>
+      <p class="fuss" id="tarifFuss"></p>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="modalKonto">
+  <div class="modal-box schmal">
+    <div class="m-head">
+      <h2 id="kontoTitel">Konto</h2>
+      <button class="kbtn dunkel" id="btnCloseKonto" style="margin-left:auto">Fertig</button>
+    </div>
+    <div class="m-body" id="kontoBody"></div>
+  </div>
+</div>
+
+<script src="./vendor/leaflet/leaflet.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>

@@ -15,7 +15,7 @@ import { DatabaseSync } from "node:sqlite";
 const scryptAsync = promisify(scrypt);
 const HIER = path.dirname(fileURLToPath(import.meta.url));
 const WURZEL = path.resolve(HIER, "..");
-const OEFFENTLICH = path.join(WURZEL, "public");
+const OEFFENTLICH = path.join(WURZEL, "docs");
 
 const PORT = Number(process.env.PORT || 8080);
 const DB_PFAD = process.env.DB_PATH || path.join(WURZEL, "data", "ladekarte.db");

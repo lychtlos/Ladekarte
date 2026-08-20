@@ -102,6 +102,20 @@ dem Netz, Konto-Anfragen werden nie zwischengespeichert.
 
 ---
 
+## Zwei Betriebsarten
+
+**a) Statisch, z. B. GitHub Pages.** Es wird nur der Ordner `docs` ausgeliefert. Karte, Belegung
+und Tarifvergleich funktionieren vollständig, die Ladekarten liegen im Browser. **Konten gibt es
+hier nicht** — GitHub Pages führt keinen Server aus. Die App erkennt das und erklärt es im
+Konto-Dialog, statt ein Anmeldeformular anzubieten, das nicht funktionieren kann.
+
+Einrichtung: Repository → *Settings* → *Pages* → *Source: Deploy from a branch* →
+Branch `main`, Ordner `/docs` → *Save*.
+
+**b) Mit Server.** `npm start` (oder Docker) liefert denselben Ordner aus und beantwortet
+zusätzlich `/api/…`. Erst damit gibt es Konten und den geräteübergreifenden Abgleich.
+Nötig ist ein Hoster, der Node ausführt — GitHub Pages kann das nicht.
+
 ## Betrieb
 
 | Variable | Vorgabe | Zweck |
@@ -142,14 +156,18 @@ mitsamt `-wal`/`-shm` kopieren, am besten bei gestopptem Dienst.
 
 ```
 server/server.js          HTTP, Konten, Sitzungen, Tarifspeicher (SQLite)
-public/index.html         Gerüst
-public/app.css            Design — dunkel nur für die Bedienelemente
-public/app.js             Karte, Liste, Detail, Tarif-Editor, Konto, Abgleich
-public/sw.js              Service Worker
-public/manifest.webmanifest
-public/vendor/leaflet/    Leaflet 1.9.4, lokal ausgeliefert (kein CDN)
-public/icons/             App-Icons
+docs/index.html           Gerüst
+docs/app.css              Design — dunkel nur für die Bedienelemente
+docs/app.js               Karte, Liste, Detail, Tarif-Editor, Konto, Abgleich
+docs/sw.js                Service Worker
+docs/manifest.webmanifest
+docs/vendor/leaflet/      Leaflet 1.9.4, lokal ausgeliefert (kein CDN)
+docs/icons/               App-Icons
 ```
+
+Der Ordner heißt `docs`, weil GitHub Pages genau diesen Namen ohne weitere Einrichtung
+ausliefern kann. Der Server liefert denselben Ordner aus. Alle Pfade darin sind relativ,
+die App läuft deshalb sowohl unter `/` als auch unter `/Ladekarte/`.
 
 ## Grenzen
 
